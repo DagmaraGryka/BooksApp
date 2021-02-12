@@ -31,6 +31,7 @@
       thisBooksList.getElements();
       thisBooksList.render();
       thisBooksList.initActions();
+      thisBooksList.determineRatingBgc();
 
     }
 
@@ -53,10 +54,14 @@
       const thisBooksList = this;
 
       for(let books of dataSource.books){
+
         const generatedHTML = templates.bookTemplate(books); //wygenerowanie kodu HTML
         const element = utils.createDOMFromHTML(generatedHTML);//wygeneruj element DOM
         thisBooksList.bookContainer.appendChild(element);// element DOM dołącz jako nowe dziecko DOM do listy .books-list
 
+        const ratingBgc = thisBooksList.determineRatingBgc(books.rating);
+        const ratingWidth = books.rating * 10;
+        console.log(ratingBgc, ratingWidth);
       }
     }
 
@@ -108,14 +113,14 @@
     filterBooks(){
       const thisBooksList = this;
 
-      for(let hiddenBook of dataSource.books){
+      for(let hiddenBook of dataSource.books){ // przejdzie po wszystkich elementach
 
         let shouldBeHidden = false;
 
-        for(let filter of thisBooksList.filters){
+        for(let filter of thisBooksList.filters){ //ustali, czy dany filtr pasuje do informacji o danej książce.
           if(!hiddenBook.details[filter]){
             shouldBeHidden = true;
-            break;
+            break; //przerwać działanie pętli
           }
         }
 
@@ -130,19 +135,35 @@
       }
     }
 
+    determineRatingBgc(rating){
+
+      let background = '';
+
+      if(rating<6){
+        background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%);';
+      }
+      if(rating >6 && rating<=8){
+        background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%);';
+      }
+      if(rating>8 && rating<=9){
+        background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%);';
+      }
+      if(rating>9){
+        background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
+      }
+
+      return background;
 
 
-
-
-
-
-
+    }
 
   }
 
-  const app = new BooksList();
-
-
-
+  const app = { // ???????
+    init: function(){
+      new BooksList(); // const thisBooksList = this;
+    }
+  };
+  app.init();
 
 }
