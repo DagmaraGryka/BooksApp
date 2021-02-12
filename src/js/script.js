@@ -17,44 +17,49 @@
   };
 
 
-  function render(){
-    for(const data of dataSource.books){
-      /*generate HTML based on template */
-      const generateHTML = templates.book(data);
+  class BooksList {
+    constructor(){
+      const thisBooksList = this;
 
-      /*create element using utils.createElementFromHTML */
-      const elementHTML = utils.createDOMFromHTML(generateHTML);
+      thisBooksList.initData();
+      thisBooksList.getElements();
+      thisBooksList.render();
 
-      /*add element to menu */
-      booksWrapper.appendChild(elementHTML);
     }
+
+    initData() {
+      const thisBooksList = this;
+      thisBooksList.data = dataSource.books;
+    }
+
+    getElements(){
+      const thisBooksList = this;
+
+      thisBooksList.bookContainer = document.querySelector(select.containerOf.bookList);
+    }
+
+    render(){
+      const thisBooksList = this;
+
+      for(let books of dataSource.books){
+        const generatedHTML = templates.bookTemplate(books); //wygenerowanie kodu HTML
+        const element = utils.createDOMFromHTML(generatedHTML);//wygeneruj element DOM
+        thisBooksList.bookContainer.appendChild(element);// element DOM dołącz jako nowe dziecko DOM do listy .books-list
+
+      }
+    }
+
+
+
+
+
+
+
   }
 
-  render();
+  const app = new BooksList();
 
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  app.init();
 
 
 }
