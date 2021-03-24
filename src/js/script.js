@@ -19,7 +19,7 @@
     favoriteBook: 'favorite',
     hidden: 'hidden',
     bookImage: 'book__image',
-    rating: 'book_rating', // ??????????
+    rating: 'book_rating',
 
   };
 
@@ -98,8 +98,7 @@
       // filtrowanie książek przy użyciu formularza
 
       thisBooksList.filtersContainer.addEventListener('click', function(event){
-        const clickedElement = event.target; //?????
-
+        const clickedElement = event.target;
         if(clickedElement.tagName === 'INPUT' && clickedElement.type === 'checkbox' && clickedElement.name ==='filter'){
 
           if(clickedElement.checked){
@@ -168,9 +167,9 @@
 
   }
 
-  const app = { // ???????
+  const app = {
     init: function(){
-      new BooksList(); // const thisBooksList = this;
+      new BooksList();
     }
   };
   app.init();
